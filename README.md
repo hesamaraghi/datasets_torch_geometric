@@ -6,5 +6,3 @@ dataset classes for event-based classification datasets
 - NCALTECH101
 - NASL
 - NCARS
-
-## New section

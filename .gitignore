@@ -1,0 +1,13 @@
+# Dataset names
+NASL
+NCALTECH101
+NCARS
+NMNIST
+
+.ipynb_checkpoints
+.vscode
+lightning_logs/*
+**/__pycache__
+slurm*
+sbatch*
+.DS_Store

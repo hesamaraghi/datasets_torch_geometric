@@ -4,7 +4,7 @@ import torch
 from torch_geometric.data import Data
 
 try:
-    from datasets.base_dataset import BaseDataset
+    from .base_dataset import BaseDataset
 except ModuleNotFoundError:
     from base_dataset import BaseDataset
 

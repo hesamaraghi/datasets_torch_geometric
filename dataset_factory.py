@@ -1,7 +1,8 @@
-from datasets.nmnist import NMNIST
-from datasets.ncaltech101 import NCALTECH101
-from datasets.nasl import NASL
-from datasets.ncars import NCARS
+from .nmnist import NMNIST
+from .ncaltech101 import NCALTECH101
+from .nasl import NASL
+from .ncars import NCARS
+from .fan1vs3 import FAN1VS3
 import os
 
 def create_dataset(dataset_path = None, 
@@ -28,6 +29,11 @@ def create_dataset(dataset_path = None,
                         num_workers = num_workers)
     elif dataset_name == "NCARS":
         return NCARS(   root = dataset_path,
+                        name = dataset_type,
+                        transform = transform,
+                        num_workers = num_workers)
+    elif dataset_name == "FAN1VS3":
+        return FAN1VS3(   root = dataset_path,
                         name = dataset_type,
                         transform = transform,
                         num_workers = num_workers)

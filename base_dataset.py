@@ -105,7 +105,6 @@ class BaseDataset(Dataset):
  
         for name in self.dataset_names:
             if name != 'all':
-
                 for category in self.categories:
                     if not osp.exists(osp.join(self.processed_dir, name, category)):
                         os.makedirs(osp.join(self.processed_dir, name, category))
@@ -114,10 +113,10 @@ class BaseDataset(Dataset):
                 for file in name_files:
                     src_path = osp.join(self.processed_dir, 'all', *file.split(os.sep)[-2:])
                     try:
-                        os.symlink(src_path,file)
+                        os.symlink(osp.relpath(src_path,osp.dirname(file)),file)
                     except FileExistsError:
                         os.unlink(file)
-                        os.symlink(src_path,file)
+                        os.symlink(osp.relpath(src_path,osp.dirname(file)),file)
                         
                 print(f"Sym links for '{name}' dataset are created again.")
         

@@ -6,7 +6,7 @@ from .base_dataset import BaseDataset
 from event_utils.lib.data_formats.read_events import read_h5_events_dict
 
 dir_path = osp.dirname(osp.realpath(__file__))
-dataset_path = osp.join(dir_path,'fan1vs3','data')
+dataset_path = osp.join(dir_path,'FAN1VS3','data')
 
 class FAN1VS3(BaseDataset):
     

@@ -53,6 +53,7 @@ def correct_sym_links(dataset_name):
             for f in glob(os.path.join(raw_path, folder, '*','*')):
                 all_corresponding_path = osp.join(all_path,*f.split(os.sep)[-2:])
                 src = os.readlink(all_corresponding_path)
+                src = osp.join(osp.dirname(all_corresponding_path), src)
                 try:
                     os.symlink(osp.relpath(src,osp.dirname(f)),f)
                 except FileExistsError:

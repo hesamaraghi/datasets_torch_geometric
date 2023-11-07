@@ -15,6 +15,8 @@ class NCALTECH101(BaseDataset):
     
     def __init__(self, root=dataset_path, name='all', transform=None,
             pre_transform=None, pre_filter=None, num_workers=4):
+        if root is None:
+            root = dataset_path 
         super().__init__(root, name, transform, pre_transform, pre_filter, num_workers)
 
     def read_events(self,filename):

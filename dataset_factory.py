@@ -10,7 +10,9 @@ def create_dataset(dataset_path = None,
                    dataset_type = None,
                    transform = None, 
                    num_workers = 4):
-    dataset_path = os.path.abspath(dataset_path)
+    
+    # if dataset_path is not None:
+    #     dataset_path = os.path.abspath(dataset_path)
     
     if dataset_name == "NMNIST":
         return NMNIST(  root = dataset_path, 

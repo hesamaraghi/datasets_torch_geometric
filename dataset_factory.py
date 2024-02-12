@@ -9,6 +9,7 @@ def create_dataset(dataset_path = None,
                    dataset_name = None, 
                    dataset_type = None,
                    transform = None, 
+                   pre_transform = None,
                    num_workers = 4):
     dataset_path = os.path.abspath(dataset_path)
     
@@ -16,26 +17,31 @@ def create_dataset(dataset_path = None,
         return NMNIST(  root = dataset_path, 
                         name = dataset_type, 
                         transform = transform,
+                        pre_transform = pre_transform,
                         num_workers = num_workers)
     elif dataset_name == "NCALTECH101":
         return NCALTECH101( root = dataset_path,
                             name = dataset_type,
                             transform = transform,
+                            pre_transform = pre_transform,
                             num_workers = num_workers)
     elif dataset_name == "NASL":
         return NASL(    root = dataset_path,
                         name = dataset_type,
                         transform = transform,
+                        pre_transform = pre_transform,
                         num_workers = num_workers)
     elif dataset_name == "NCARS":
         return NCARS(   root = dataset_path,
                         name = dataset_type,
                         transform = transform,
+                        pre_transform = pre_transform,
                         num_workers = num_workers)
     elif dataset_name == "FAN1VS3":
         return FAN1VS3(   root = dataset_path,
                         name = dataset_type,
                         transform = transform,
+                        pre_transform = pre_transform,
                         num_workers = num_workers)
     # Add more dataset options here as needed
     else:

@@ -3,6 +3,7 @@ from .ncaltech101 import NCALTECH101
 from .nasl import NASL
 from .ncars import NCARS
 from .fan1vs3 import FAN1VS3
+from .dvsgesture import DVSGESTURE
 import os
 
 def create_dataset(dataset_path = None, 
@@ -45,6 +46,12 @@ def create_dataset(dataset_path = None,
                         transform = transform,
                         pre_transform = pre_transform,
                         num_workers = num_workers)
+    elif dataset_name == "DVSGESTURE":
+        return DVSGESTURE( root = dataset_path,
+                        name = dataset_type,
+                        transform = transform,
+                        pre_transform = pre_transform,
+                        num_workers = num_workers)       
     # Add more dataset options here as needed
     else:
         raise ValueError("Invalid dataset name")

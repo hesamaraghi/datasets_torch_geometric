@@ -13,7 +13,7 @@ class BaseDataset(Dataset):
     def __init__(self, root, name='all', transform=None,
                  pre_transform=None, pre_filter=None, num_workers=4):
         self.dataset_names = ['all' , 'training', 'validation', 'test']
-        assert name in self.dataset_names, "'name' should be chosen from 'all', 'training', 'validation', and 'test'. "
+        assert name in self.dataset_names, f"'name' should be chosen from 'all', 'training', 'validation', and 'test'. but {name} is given."
         self.num_workers = num_workers
     
         super().__init__(root, transform, pre_transform, pre_filter)

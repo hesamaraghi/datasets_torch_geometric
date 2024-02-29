@@ -4,6 +4,7 @@ from .nasl import NASL
 from .ncars import NCARS
 from .fan1vs3 import FAN1VS3
 from .dvsgesture import DVSGESTURE
+from .dvsgesture_tonic import DVSGESTURE_TONIC
 import os
 
 def create_dataset(dataset_path = None, 
@@ -51,7 +52,13 @@ def create_dataset(dataset_path = None,
                         name = dataset_type,
                         transform = transform,
                         pre_transform = pre_transform,
-                        num_workers = num_workers)       
+                        num_workers = num_workers)    
+    elif dataset_name == "DVSGESTURE_TONIC":
+        return DVSGESTURE_TONIC( root = dataset_path,
+                        name = dataset_type,
+                        transform = transform,
+                        pre_transform = pre_transform,
+                        num_workers = num_workers)            
     # Add more dataset options here as needed
     else:
         raise ValueError("Invalid dataset name")

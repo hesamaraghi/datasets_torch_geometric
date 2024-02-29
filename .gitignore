@@ -5,6 +5,7 @@ NCARS
 NMNIST
 FAN1VS3
 DVSGESTURE
+DVSGESTURE_TONIC
 
 .ipynb_checkpoints
 .vscode

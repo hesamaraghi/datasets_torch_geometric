@@ -102,7 +102,9 @@ class BaseDataset(Dataset):
         if  len(processed_paths_all) == 0 or not all([osp.exists(f) for f in processed_paths_all]):
             raw_paths_all = [f for f in self.raw_paths if f.split(os.sep)[-3] == 'all']
             self.process_all(raw_paths_all)
- 
+        else:
+            print(f"Files in 'all' folder are already processed.", flush=True)
+            
         for name in self.dataset_names:
             if name != 'all':
                 for category in self.categories:

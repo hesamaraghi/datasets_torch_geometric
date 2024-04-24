@@ -4,14 +4,14 @@ import torch
 from torch_geometric.data import  Data
 
 try:
-    from .base_dataset import BaseDataset
+    from .base_dataset import BaseDataset, BaseInMemoryDataset
 except ModuleNotFoundError:
-    from base_dataset import BaseDataset
+    from base_dataset import BaseDataset, BaseInMemoryDataset
 
 dir_path = osp.dirname(osp.realpath(__file__))
 dataset_path = osp.join(dir_path,'NCALTECH101','data')
 
-class NCALTECH101(BaseDataset):
+class NCALTECH101(BaseInMemoryDataset):
     
     def __init__(self, root=dataset_path, name='all', transform=None,
             pre_transform=None, pre_filter=None, num_workers=4):

@@ -2,13 +2,13 @@ import os.path as osp
 import numpy as np
 import torch
 from torch_geometric.data import  Data
-from .base_dataset import BaseDataset
+from .base_dataset import BaseDataset, BaseInMemoryDataset
 from event_utils.lib.data_formats.read_events import read_h5_events_dict
 
 dir_path = osp.dirname(osp.realpath(__file__))
 dataset_path = osp.join(dir_path,'FAN1VS3','data')
 
-class FAN1VS3(BaseDataset):
+class FAN1VS3(BaseInMemoryDataset):
     
     def __init__(self, root=dataset_path, name='all', transform=None,
             pre_transform=None, pre_filter=None, num_workers=4):

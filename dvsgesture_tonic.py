@@ -3,16 +3,16 @@ import numpy as np
 import torch
 from torch_geometric.data import  Data
 try:
-    from .base_dataset import BaseDataset
+    from .base_dataset import BaseDataset, BaseInMemoryDataset
 except:
-    from base_dataset import BaseDataset
+    from base_dataset import BaseDataset, BaseInMemoryDataset
     
 from tonic.cached_dataset import load_from_disk_cache
 
 dir_path = osp.dirname(osp.realpath(__file__))
 dataset_path = osp.join(dir_path,'DVSGESTURE_TONIC','data')
 
-class DVSGESTURE_TONIC(BaseDataset):
+class DVSGESTURE_TONIC(BaseInMemoryDataset):
     
     def __init__(self, root=dataset_path, name='all', transform=None,
             pre_transform=None, pre_filter=None, num_workers=4):

@@ -4,6 +4,7 @@ import os.path as osp
 import multiprocessing
 from tqdm import tqdm
 from multiprocessing import Pool, cpu_count
+from utils.config_utils import relative_symlink
 
 import torch
 
@@ -22,8 +23,17 @@ class BaseDataset(Dataset):
 
     @property
     def raw_file_names(self):
-        all_files = glob.glob(osp.join(self.raw_dir, '*', '*', '*'))
-        return [osp.join(*f.split(os.sep)[-3:]) for f in all_files if osp.isfile(f)]  
+        raw_dir_in_data_dir = osp.join(*self.raw_dir.split(os.sep)[:-2], "data", self.raw_dir.split(os.sep)[-1])
+        if osp.exists(raw_dir_in_data_dir):
+            all_files = glob.glob(osp.join(raw_dir_in_data_dir, '*', '*', '*'))
+            for f in all_files:
+                f_new = osp.join(self.raw_dir, *f.split(os.sep)[-3:])
+                if not osp.exists(f_new):
+                    os.makedirs(osp.dirname(f_new), exist_ok=True)
+                    relative_symlink(f, f_new)
+        else:   
+            all_files = glob.glob(osp.join(self.raw_dir, '*', '*', '*'))
+        return [osp.join(*f.split(os.sep)[-3:]) for f in all_files if osp.isfile(f)]      
 
     @property
     def processed_file_names(self):
@@ -171,8 +181,18 @@ class BaseInMemoryDataset(InMemoryDataset):
         self.data, self.slices = torch.load(path)
 
     @property
-    def raw_file_names(self):
-        return self.dataset_names     
+    def raw_file_names(self):  
+        raw_dir_in_data_dir = osp.join(*self.raw_dir.split(os.sep)[:-2], "data", self.raw_dir.split(os.sep)[-1])
+        if osp.exists(raw_dir_in_data_dir):
+            all_files = glob.glob(osp.join(raw_dir_in_data_dir, '*', '*', '*'))
+            for f in all_files:
+                f_new = osp.join(self.raw_dir, *f.split(os.sep)[-3:])
+                if not osp.exists(f_new):
+                    os.makedirs(osp.dirname(f_new), exist_ok=True)
+                    relative_symlink(f, f_new)
+        for d_name in self.dataset_names:
+            assert osp.exists(osp.join(self.raw_dir, d_name)), f"'{d_name}' folder does not exist in '{self.raw_dir}'"
+        return self.dataset_names          
 
     @property
     def processed_file_names(self):
@@ -209,7 +229,9 @@ class BaseInMemoryDataset(InMemoryDataset):
             data_list = [d for d in data_list if self.pre_filter(d)]
 
         if self.pre_transform is not None:
-            data_list = [self.pre_transform(d) for d in data_list]
+            print('Pre-transforming data...')
+            for i in tqdm(range(len(data_list))):
+                data_list[i] = self.pre_transform(data_list[i])
         
         return self.collate(data_list)
 

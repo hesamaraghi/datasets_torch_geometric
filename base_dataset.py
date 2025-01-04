@@ -37,7 +37,12 @@ class BaseDataset(Dataset):
 
     @property
     def processed_file_names(self):
-        return [osp.splitext(osp.join(*f.split(os.sep)[-3:]))[0]+'.pt' for f in self.raw_file_names]
+        if osp.exists(osp.join(self.root, 'file_names.txt')):
+            with open(osp.join(self.root, 'file_names.txt'), 'r') as f:
+                file_names = f.read().splitlines()
+        else:
+            file_names = self.raw_file_names
+        return [osp.splitext(osp.join(*f.split(os.sep)[-3:]))[0]+'.pt' for f in file_names]
 
     def download(self):
         pass
@@ -101,7 +106,12 @@ class BaseDataset(Dataset):
        
     @property
     def categories(self):
-        return sorted(os.listdir(osp.join(self.raw_dir, 'all')))
+        if osp.exists(osp.join(self.root, 'file_names.txt')):
+            with open(osp.join(self.root, 'file_names.txt'), 'r') as f:
+                file_names = f.read().splitlines()
+            return sorted(list(set([f.split(os.sep)[-2] for f in file_names])))
+        else:
+            return sorted(os.listdir(osp.join(self.raw_dir, 'all')))
     
     @property
     def num_classes(self) -> int:

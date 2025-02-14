@@ -188,7 +188,7 @@ class BaseInMemoryDataset(InMemoryDataset):
         super().__init__(root, transform, pre_transform, pre_filter)
         assert name in self.dataset_names, "'name' should be chosen from 'all', 'training', 'validation', and 'test'. "
         path = self.processed_paths[self.dataset_names.index(name)]
-        self.data, self.slices = torch.load(path)
+        self.data, self.slices = torch.load(path, weights_only=True)
 
     @property
     def raw_file_names(self):  
